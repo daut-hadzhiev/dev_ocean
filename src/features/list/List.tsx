@@ -1,33 +1,55 @@
-import { BusinessApiUrl, BusinessProps } from "./listConsts";
+import { useMemo } from "react";
 import { useQuery } from "react-query";
-import logo from '../../logo.svg';
-import styles from './List.module.css';
-import { fetchBusinesses } from "./listAPI";
+import { Link } from "react-router-dom";
 
-import { updateData } from "./listSlice";
-import { useEffect } from "react";
+import logo from "../../logo.svg";
+import styles from "./List.module.css";
+import { fetchBusinesses } from "./listAPI";
+import { BusinessApiUrl, BusinessProps } from "./listConsts";
 
 export function List() {
-    const businessQuery = useQuery<BusinessProps[], Error>(["Business-fetch"], async () =>  await fetchBusinesses(BusinessApiUrl) );
-    const businesses = businessQuery.data || [];
-    
-    useEffect(() => {
-        updateData(businesses)
-    },[businesses])
+  const businessQuery = useQuery<BusinessProps[], Error>(
+    ["Business-fetch"],
+    async () => await fetchBusinesses(BusinessApiUrl)
+  );
+  const businesses = useMemo(
+    () => businessQuery.data || [],
+    [businessQuery.data]
+  );
 
-    console.log(businesses)
+  return (
+    <div>
+      <header className={styles.listHeader}>
+        <img src={logo} className={styles.logo} alt="logo" />
+        Logo
+      </header>
 
-    return (
-        <div>
-
-        <header className={styles.listHeader}>
-            <img src={logo} className={styles.logo} alt="logo" />
-            Logo
-        </header>
-        <ul>
-            {businesses.map(((business: BusinessProps) =><li key={business.id}>{business.name}</li> ))}
-        </ul>
-        </div>
-    );
-} 
-
+      <table className={styles.table}>
+        <thead className={styles.tableHead}>
+          <tr className={styles.tableHeadRow}>
+            <th>Name</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {businesses?.map((business) => (
+            <tr key={business.id} className={styles.tableRow}>
+              <td>
+                {/* It makes bad User experience to have the whole row clickabe 
+                so I have decided to make the business name a Link  */}
+                <Link className={styles.link} to={`/${business.id}`}>
+                  {business.name}
+                </Link>
+              </td>
+              <td>
+                <span className={styles.description}>
+                  {business.description}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}

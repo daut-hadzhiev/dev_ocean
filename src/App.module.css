@@ -1,0 +1,17 @@
+@import-normalize;
+
+
+@value backgroundColor:  #f8f8fa;
+
+.appLogo {
+    height: 4vmin;
+    pointer-events: none;
+}
+.appContainer {
+    background: backgroundColor;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: calc(10px + 2vmin);
+}
+

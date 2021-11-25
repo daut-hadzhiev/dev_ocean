@@ -1,39 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import { List } from './features/list/List';
+import React from "react";
+import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import './App.css';
-import { getRoutePath } from './app/utils';
-import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
+import styles from "./App.module.css";
+import { getRoutePath } from "./app/utils";
+import { List } from "./features/list/List";
 
 const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            refetchOnWindowFocus: false,
-        },
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
     },
-    queryCache: new QueryCache(),
+  },
+  queryCache: new QueryCache(),
 });
-
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-
-        <div className="App-container">
-            <BrowserRouter>
-                <Switch>
-                    <Route path={getRoutePath("/list")}>
-                        <List />
-                    </Route>
-                    <Route path={getRoutePath("/counter")}>
-                        <Counter />
-                    </Route>
-                </Switch>
-            </BrowserRouter>
-        </div>
+      <div className={styles.appContainer}>
+        <BrowserRouter>
+          <Switch>
+            <Route path={getRoutePath("/")}>
+              <List />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      </div>
     </QueryClientProvider>
   );
 }

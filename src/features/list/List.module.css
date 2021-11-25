@@ -1,10 +1,76 @@
+/* ===========TABLE=========== */
+@value tableBackground: #ffffff;
+@value tableBorder:     #f8f8fa;
+@value tableRowHover:   #f4f4f5;
+@value headerColor:     #b41d76;
+@value tableMargin:     10rem;
+
+
+/* ===========LIST=========== */
+@value headerBackground: #ffffff;
+@value headerHeight: 6rem;
+
 .listHeader {
-    height: 6rem;
+    background: headerBackground;
+    height: headerHeight;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 .logo {
     max-height: 100%;
+}
+.table {
+    border-collapse: collapse;
+    display: block;
+    margin: calc(tableMargin / 2);
+    max-height: calc(100vh - (tableMargin + headerHeight));
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: calc(100% - tableMargin);
+}
+.table tr {
+    text-align: left;
+    height: 4rem;
+    border: 0.5rem solid tableBorder;
+    background: tableBackground;
+}
+.table tr:hover {
+    background:tableRowHover;
+}
+
+.table tr:hover .link {
+    text-decoration: underline;
+}
+
+.table tr th,
+.table tr td {
+    padding: 1rem 2rem;
+}
+.tableHeadRow{
+    color: headerColor;
+    background: tableBackground;
+}
+.tableHeadRow th:first-of-type {
+    width: 15%;
+}
+.tableRow {
+    height: 4rem;
+    border: 1.05rem solid tableBorder;
+    background: tableBackground;
+}
+
+.link {
+    color: inherit;
+    text-decoration: none
+}
+.link:hover {
+    text-decoration: underline;
+}
+
+.description {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

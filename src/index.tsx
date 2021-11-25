@@ -1,18 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { store } from './app/store';
-import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
+// import { useQuery } from "react-query";
+
+import "./index.css";
+
+import App from "./App";
+// import { fetchBusinesses } from "./features/list/listAPI";
+// import { BusinessApiUrl, BusinessProps } from "./features/list/listConsts";
+import * as serviceWorker from "./serviceWorker";
+
+// const businessesResult = useQuery<BusinessProps[], Error>(
+//   "businesses",
+//   async () => await fetchBusinesses(BusinessApiUrl)
+// );
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false, // set to false as data is not expected to be dynamic for the businesses API
+    },
+  },
+  queryCache: new QueryCache(),
+});
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  <QueryClientProvider client={queryClient}>
+    <App />
+  </QueryClientProvider>,
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
