@@ -1,6 +1,6 @@
 import React from "react";
 import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 
 import styles from "./App.module.css";
 import { useBusinesses } from "./app/api/useBusinesses";
@@ -33,6 +33,11 @@ function App() {
               <Spinner />
             ) : (
               <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={() => <Redirect to="/places" />}
+                />
                 <Route path={getRoutePath("/places/:id")}>
                   <Item />
                 </Route>
