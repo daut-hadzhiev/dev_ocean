@@ -3,7 +3,12 @@ import { QueryCache, QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import styles from "./App.module.css";
+import { useBusinesses } from "./app/api/useBusinesses";
 import { getRoutePath } from "./app/utils";
+import { Spinner } from "./features/common/spinner/Spinner";
+import { ErrorPage } from "./features/error/Error";
+import { Header } from "./features/header/Header";
+import { Item } from "./features/item/Item";
 import { List } from "./features/list/List";
 
 const queryClient = new QueryClient({
@@ -16,18 +21,33 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const { data: businesses, isLoading } = useBusinesses();
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className={styles.appContainer}>
+    <div className={styles.appContainer}>
+      <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <Switch>
-            <Route path={getRoutePath("/")}>
-              <List />
-            </Route>
-          </Switch>
+          <Header />
+          <div className={styles.mainWrapper}>
+            {isLoading && !businesses ? (
+              <Spinner />
+            ) : (
+              <Switch>
+                <Route path={getRoutePath("/places/:id")}>
+                  <Item />
+                </Route>
+                <Route path={getRoutePath("/places")}>
+                  <List list={businesses} />
+                </Route>
+                <Route>
+                  <ErrorPage />
+                </Route>
+              </Switch>
+            )}
+          </div>
         </BrowserRouter>
-      </div>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </div>
   );
 }
 

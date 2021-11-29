@@ -1,0 +1,35 @@
+@value general: "/src/App.module.css";
+@value center from general;
+
+
+/* =========== SPINNER =========== */
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinnerWrapper {
+    composes: center;
+    flex-flow: column;
+}
+
+.spinner {
+  display: inline-block;
+  width: 180px;
+  height: 180px;
+}
+.spinner:after {
+  content: " ";
+  display: block;
+  width: 128px;
+  height: 128px;
+  margin: 18px;
+  border-radius: 50%;
+  border: 10px solid #000;
+  border-color: #000 transparent #000 transparent;
+  animation: spinner 1.2s linear infinite;
+}

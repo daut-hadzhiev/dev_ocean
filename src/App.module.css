@@ -1,7 +1,22 @@
 @import-normalize;
 
-
+/* ========== GENERAL ========== */
 @value backgroundColor:  #f8f8fa;
+@value gutter:              10rem;
+@value gutterL:             gutter;
+@value gutterS:             5rem;
+@value headerHeight:        calc(gutter / 2);
+
+
+/* =========== MAIN =========== */
+@value mainWrapperHeightL:  calc(100vh - ((gutterL / 3) * 2 + headerHeight));
+@value mainWrapperHeightS:  calc(100vh - ((gutterS / 3) * 2 + headerHeight));
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .appLogo {
     height: 4vmin;
@@ -9,9 +24,22 @@
 }
 .appContainer {
     background: backgroundColor;
-    height: 100vh;
+    width: 100vw;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    font-size: calc(10px + 2vmin);
+    align-items: center;
+    /* font-size: calc(10px + 2vmin); */
 }
 
+.mainWrapper {
+    padding: calc(gutterL / 3) calc(gutterL / 2); 
+    width: calc(100vw - gutterL);
+}
+
+@media screen and (max-width: 920px) {
+    .mainWrapper {
+        padding: calc(gutterS / 3) calc(gutterS / 2);
+        width: calc(100vw - gutterS);
+    }
+}

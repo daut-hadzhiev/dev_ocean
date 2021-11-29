@@ -1,43 +1,33 @@
-import { useMemo } from "react";
-import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 
-import logo from "../../logo.svg";
+import { ErrorPage } from "../error/Error";
+import { BusinessProps } from "../item/itemConsts";
 import styles from "./List.module.css";
-import { fetchBusinesses } from "./listAPI";
-import { BusinessApiUrl, BusinessProps } from "./listConsts";
 
-export function List() {
-  const businessQuery = useQuery<BusinessProps[], Error>(
-    ["Business-fetch"],
-    async () => await fetchBusinesses(BusinessApiUrl)
-  );
-  const businesses = useMemo(
-    () => businessQuery.data || [],
-    [businessQuery.data]
-  );
+interface ListProps {
+  list?: BusinessProps[];
+}
 
-  return (
-    <div>
-      <header className={styles.listHeader}>
-        <img src={logo} className={styles.logo} alt="logo" />
-        Logo
-      </header>
-
+export const List = ({ list }: ListProps) =>
+  list?.length ? (
+    <div className={styles.tableWrapper}>
       <table className={styles.table}>
         <thead className={styles.tableHead}>
-          <tr className={styles.tableHeadRow}>
+          <tr className={`${styles.tableHeadRow} ${styles.tableRow}`}>
             <th>Name</th>
             <th>Description</th>
           </tr>
         </thead>
         <tbody>
-          {businesses?.map((business) => (
+          {list.map((business) => (
             <tr key={business.id} className={styles.tableRow}>
               <td>
-                {/* It makes bad User experience to have the whole row clickabe 
-                so I have decided to make the business name a Link  */}
-                <Link className={styles.link} to={`/${business.id}`}>
+                {/* 
+                    It makes bad User experience to have the whole row clickabe 
+                    so I have decided to make the business name a Link
+                    Also underline is shown on hover to show the user it is a link
+                */}
+                <Link className={styles.link} to={`/places/${business.id}`}>
                   {business.name}
                 </Link>
               </td>
@@ -51,5 +41,8 @@ export function List() {
         </tbody>
       </table>
     </div>
+  ) : (
+    <div className={styles.spinnerWrapper}>
+      <ErrorPage />
+    </div>
   );
-}

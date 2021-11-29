@@ -1,0 +1,48 @@
+@value tableBackground:     #ffffff;
+@value tableBorder:         #f8f8fa;
+@value tableRowHover:       #f4f4f5;
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  margin: -0.5rem;
+  width: calc(100% + 1rem);
+}
+.tableRow {
+  height: 4rem;
+  border: 0.5rem solid tableBackground;
+  background: tableBorder;
+}
+.link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.table tr:hover {
+  background: tableRowHover;
+}
+
+.tableRow td {
+  padding: 1rem;
+}
+
+.table tr:hover .link {
+  text-decoration: underline;
+}
+.description {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.name {
+  width: 20%;
+  min-width: 20rem;
+}
+.title {
+  font-size: 2rem;
+  font-weight: normal;
+}

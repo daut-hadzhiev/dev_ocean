@@ -1,19 +1,3 @@
-export interface BusinessProps {
-  id: string;
-  name: string;
-  description: string;
-  phone: string;
-  image: string;
-  email: string;
-  address: {
-    number: string;
-    street: string;
-    zip: string;
-    city: string;
-    country: string;
-  };
-}
-
 export const BusinessApiUrl =
   "https://api.jsonbin.io/b/6177e9399548541c29c8c0f5";
 
